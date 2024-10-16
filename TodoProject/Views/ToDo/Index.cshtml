@@ -1,0 +1,51 @@
+﻿@model ToDoViewModel
+
+@{
+    ViewData["Title"] = "ToDo List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ToDo List for @Model.UserName</h2>
+
+@if (Model.ToDos != null && Model.ToDos.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Activity No</th>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ToDos)
+            {
+                <tr>
+                    <td>@item.ActivityNo</td>
+                    <td>@item.Subject</td>
+                    <td>@item.Description</td>
+                    <td>@item.Status</td>
+                    <td>
+                        <a href="/ToDo/Edit/@item.ToDoId" class="btn btn-sm btn-primary">Edit</a>
+                        <form method="post" asp-action="Delete" asp-route-id="@item.ToDoId" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                        <form method="post" asp-action="Mark" asp-route-id="@item.ToDoId" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-warning" name="status" value="Done">Mark Done</button>
+                            <button type="submit" class="btn btn-sm btn-warning" name="status" value="Canceled">Cancel</button>
+                            <button type="submit" class="btn btn-sm btn-warning" name="status" value="Unmarked">Unmark</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No ToDo items found for @Model.UserName.</p>
+}
+
+<a href="/ToDo/Create" class="btn btn-success">Create New ToDo</a>
