@@ -94,10 +94,10 @@ namespace TodoProject.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "Invalid User ID."; // Handle invalid UserId scenario
+                ViewBag.ErrorMessage = "Invalid User ID.";
             }
 
-            return View(toDo); // Return to the Create view with an error message
+            return View(toDo); 
         }
 
 
